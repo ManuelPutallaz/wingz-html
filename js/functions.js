@@ -76,6 +76,7 @@ $(function() {
 				$asideContent.show().animate({'left': 234, 'right': '0'});
 
 				event.stopPropagation();
+				$container.find('.container-overlay').remove();
 				$container.append('<div class="container-overlay"></div>');
 			}
 		});
@@ -189,7 +190,7 @@ $(function() {
 	// tabs
 	$('.tabs').find('.tab:not(:first-child)').hide();
 
-	$('.tabs-nav').on('click', 'a', function(e){
+	$('.tabs-nav ul:not(.ext-links)').on('click', 'a', function(e){
 
 		var $this = $(this),
 			$parent = $this.parent(),
