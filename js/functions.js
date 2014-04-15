@@ -20,6 +20,11 @@ $(function() {
 			var scroll_top = $(window).scrollTop();
 			scroll_top > 95 ? $('.page-header, .top-bar').addClass('minimized') : $('.page-header, .top-bar').removeClass('minimized');
 		})
+		$('.latest-news .entry').each(function(){
+			var imgSrc = $(this).find('> img').attr('src');
+			$(this).css('background-image', 'url(' + imgSrc + ')');
+		});
+
 		$('.filler').each(function(){
 			var percentFilled = $(this).data('percent'),
 				$counter = $(this).parents('.progress-bar').find('.counter');
