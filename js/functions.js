@@ -80,6 +80,21 @@ $(function() {
 
 				$asideContent.show().animate({'left': 234, 'right': '0'});
 
+				if( $('.slider').length ) {
+					$('.slider ul.slides').bxSlider({
+						mode: 'horizontal',
+						speed: 500,
+						randomStart: false,
+						auto: true,
+						pause: 6000,
+						adaptiveHeight: true,
+						adaptiveHeightSpeed: 200,
+						useCSS: false,
+						pager: false,
+						preloadImages: 'all'
+					})
+				}
+
 				event.stopPropagation();
 				$container.find('.container-overlay').remove();
 				$container.append('<div class="container-overlay"></div>');
@@ -169,6 +184,7 @@ $(function() {
 		$('.video-player .play').on('click', function(){
 			$(this).toggleClass('pause');
 		})
+
 	})
 
 	$('.sort-btn').on('click', function(event){
