@@ -482,9 +482,15 @@ ul.widgets li.widget { margin-bottom: 24px; }
 .rate-form .two-cols .col-left,
 .rate-form .two-cols .col-right { float: left; width: 374px; }
 .rate-form .two-cols .col-right { float: right; padding-bottom: 29px; }
-.rate-form h4 { color: #fff; font-weight: normal; margin-bottom: 46px; }
+.rate-form h4 { color: #fff; font-weight: normal; margin-bottom: 64px; }
 .rate-form .points-field { width: 0; height: 0; visibility: hidden; opacity: 0; background: 0; border: 0; }
 .rate-form .submit { position: absolute; right: 0; bottom: 0; margin-right: 298px; }
+.rate-form-submitted { display: none; }
+.rate-form-submitted,
+.rate-form-submitted .message-container { position: absolute; top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; font-size: 28px; line-height: 36px; text-align: center; color: #fff;}
+.rate-form-submitted .message-container { display: table; }
+.rate-form-submitted .message-container p { display: table-cell; vertical-align: middle; }
+
 .rate-widget { background: url(images/bg-rate.png); background: rgba(0,0,0,.15); border-radius: 18px; font-size: 13px; line-height: 20px; padding: 8px 12px 8px 15px; margin: 0 -12px 0 -15px; height: 20px; }
 .rate-widget + .rate-widget { margin-top: 60px; }
 .rate-widget label { float: left; color: #fff; text-transform: uppercase; font-weight: bold; text-shadow: -1px -1px 1px rgba(0,0,0,.2); width: 82px; white-space: nowrap; }

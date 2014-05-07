@@ -185,6 +185,13 @@ $(function() {
 			$(this).toggleClass('pause');
 		})
 
+		$('.rate-form').on('submit', function(e){
+			e.preventDefault();
+
+			$('.rate-form').hide();
+			$('.rate-form-submitted').fadeIn();
+		})
+
 	})
 
 	$('.sort-btn').on('click', function(event){
