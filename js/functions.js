@@ -13,13 +13,73 @@ $(function() {
 		$container = $('.page-wrapper'),
 		$asideContent = $('.aside-content'),
 		$asideMenu = $('.aside-menu'),
+		$asideMenuClose = $('.aside-menu-close'),
 		asideTimeOut;
+	var $btn = $('.btn-placeholder .btn');
+	var btnOffsetTop = 0;
+
+	if( $btn.length ) {
+		btnOffsetTop = $btn.offset().top
+	}
 
 	$doc.ready(function(){
-		$(window).on('scroll', function(){
-			var scroll_top = $(window).scrollTop();
-			scroll_top > 95 ? $('.page-header, .top-bar').addClass('minimized') : $('.page-header, .top-bar').removeClass('minimized');
+		$(window)
+			.on('scroll', function(){
+				var scroll_top = $(window).scrollTop();
+				var winWidth = getWindowWidth();
+
+				if ( scroll_top > 95 ) {
+					$('.page-header, .top-bar').addClass('minimized');
+				} else if ( scroll_top <= 95 && winWidth > 640 ) {
+					$('.page-header, .top-bar').removeClass('minimized');
+				}
+
+				if( btnOffsetTop - scroll_top <= 132 ) {
+					$btn.addClass('btn-fixed');
+				} else {
+					$btn.removeClass('btn-fixed')
+				}
+			})
+			.on('resize', function() {
+				var winWidth = getWindowWidth();
+
+				if ( winWidth <= 640 || winWidth > 640 && $('.always-minimized').length !== 0) {
+					$('.page-header, .top-bar').addClass('minimized');
+				} else if ( winWidth > 640 && $(window).scrollTop() === 0 && $('.always-minimized').length === 0 ) {
+					$('.page-header, .top-bar').removeClass('minimized');
+				}
+			}).resize();
+
+		$('.menu').on('click', function(e) {
+			e.preventDefault();
+			$('.page-header').toggleClass('nav-opened');
+			$('.nav .dd').hide();
+		});
+
+		$('.nav li:has(.dd) > a').on('click', function(e) {
+			var winWidth = getWindowWidth();
+			var $dd = $(this).parent().find('.dd:eq(0)');
+
+			if( winWidth <= 640 ) {
+				e.preventDefault();
+				$dd.show();
+			}
+		});
+
+		$('.nav-back').on('click', function(e) {
+			e.preventDefault();
+			$(this).closest('.dd').hide();
 		})
+
+		$('.popup-link').colorbox({
+			closeBtn: false
+		});
+
+		$('#colorbox').on('click', '.popup-close', function(e) {
+			e.preventDefault();
+			$.colorbox.close();
+		});
+
 		$('.latest-news .entry').each(function(){
 			var imgSrc = $(this).find('> img').attr('src');
 			$(this).css('background-image', 'url(' + imgSrc + ')');
@@ -53,13 +113,21 @@ $(function() {
 
 		$('#btn-genres').on('click', function(event) {
 			event.preventDefault();
-			asideIsOpen = true;
-			$container.animate({'left': '-200px'}); 
-			$header.animate({'left': '-200px'});
-			$latestNews.animate({'left': '-200px'});
-			$userInfo.animate({'left': '-120px'});
-			$asideMenu.animate({'right': '0px'}).show();
 			event.stopPropagation();
+			asideIsOpen = true;
+
+			var winWidth = getWindowWidth();
+			if( winWidth > 640 ) {
+				$container.animate({'left': '-200px'}); 
+				$header.animate({'left': '-200px'});
+				$latestNews.animate({'left': '-200px'});
+				$userInfo.animate({'left': '-120px'});
+				$asideMenu.animate({'right': '0px'}).show();
+			}
+			else {
+				$asideMenu.css({'right': '0px'}).show();
+				$asideMenuClose.addClass('visible');
+			}
 			$container.append('<div class="container-overlay"></div>');
 		});
 
@@ -71,16 +139,21 @@ $(function() {
 				$latestNewsMinimized = $('.minimized .latest-news'),
 				$userInfoMinimized = $('.minimized .user-info');
 			var animateOpts = {'left': '-100%', 'margin-left': 234 };
+			var winWidth = getWindowWidth();
 
 			if( $asideContent.length ) {
-				$container.animate( animateOpts ); 
-				$header.animate( animateOpts ); 
-				$latestNewsMinimized.animate( animateOpts );
-				$userInfoMinimized.animate({'left': '-100%', 'margin-left': 80 });
+				if ( winWidth > 640 ) {
+					$container.animate( animateOpts ); 
+					$header.animate( animateOpts ); 
+					$latestNewsMinimized.animate( animateOpts );
+					$userInfoMinimized.animate({'left': '-100%', 'margin-left': 80 });
 
-				$asideContent.show().animate({'left': 234, 'right': '0'});
+					$asideContent.show().animate({'left': 234, 'right': 0 });
+				} else {
+					$asideContent.show().css({'left': 0, 'right': 0});
+				}
 
-				if( $('.slider').length ) {
+				if( $('.slider').length && !$('.aside-content .bx-wrapper').length ) {
 					$('.slider ul.slides').bxSlider({
 						mode: 'horizontal',
 						speed: 500,
@@ -101,22 +174,30 @@ $(function() {
 			}
 		});
 
-		
 
 		var asideClose = function(event) {
 			event.preventDefault()
 			var resetOpts = {'left': '0px', 'margin-left': 0 };
+			var winWidth = getWindowWidth();
+
 			if(asideIsOpen) {
-				$container.animate( resetOpts );
-				$header.animate(resetOpts);
-				$latestNews.animate(resetOpts);
-				$userInfo.animate({'left': '80px', 'margin-left': 0 });
-				$asideMenu.animate({'right': '-200px'}, function(){
+				if( winWidth > 640 ) {
+					$container.animate( resetOpts );
+					$header.animate(resetOpts);
+					$latestNews.animate(resetOpts);
+					$userInfo.animate({'left': '80px', 'margin-left': 0 });
+					$asideMenu.animate({'right': '-200px'}, function(){
+						$asideMenu.hide();					
+					});
+					$asideContent.animate({ 'left': '100%', 'right': '-100%'}, function(){
+						$asideContent.hide();
+					});
+				} else {
+					$asideContent.css({ 'left': '100%', 'right': '-100%'});
+					$asideMenu.css({'right': '-100%'});
 					$asideMenu.hide();					
-				});
-				$asideContent.animate({ 'left': '100%', 'right': '-100%'}, function(){
-					$asideContent.hide();
-				});
+					$asideMenuClose.removeClass('visible');
+				}
 				clearTimeout(asideTimeOut)
 				$('.container-overlay').remove();
 
@@ -125,20 +206,30 @@ $(function() {
 			}
 		}
 
+		$asideMenuClose.on('click', asideClose )
 		$container.on('click', '.container-overlay', asideClose );
 		$asideContent.on('click', '.btn-back, .btn-cancel, .btn-close', asideClose );
 
 		$doc.on('mouseleave', '.aside-menu', function() {
 			var resetOpts = {'left': '0px', 'margin-left': 0 };
+			var winWidth = getWindowWidth();
+
 			asideTimeOut = setTimeout(function(){
 				$('.container-overlay').remove();
+				if( winWidth > 640 ) {
+					$container.animate( resetOpts );
+					$header.animate(resetOpts);
+					$latestNews.animate(resetOpts);
+					$userInfo.animate({'left': '80px', 'margin-left': 0});
+					$asideMenu.animate({'right': '-200px'}); 
+				} else {
+					$asideContent.css({ 'left': '100%', 'right': '-100%'});
+					$asideMenu.css({'right': '-100%'});
+					$asideMenu.hide();					
+					$asideMenuClose.removeClass('visible');
+				}
 				$('.aside-menu').hide();
 				$('.aside-content').hide();
-				$container.animate( resetOpts );
-				$header.animate(resetOpts);
-				$latestNews.animate(resetOpts);
-				$userInfo.animate({'left': '80px', 'margin-left': 0});
-				$asideMenu.animate({'right': '-200px'}); 
 				
 			}, 3000);
 
@@ -169,10 +260,10 @@ $(function() {
 					$points.find('i').attr('class', 'color color-'+ ui.value);
 				},
 				start: function( event, ui) {
-					$points.css('opacity', 1)
+					$points.css({ 'opacity': 1, 'visibility': 'visible' });
 				},
 				stop: function( event, ui) {
-					$points.css('opacity', 0)	
+					$points.css({ 'opacity': 0, 'visibility': 'hidden' });
 				}
 			});
 			$counter.val( $self.slider( "value" ) );
@@ -232,19 +323,27 @@ $(function() {
 		e.preventDefault();
 
 	});
+
+	var numbers = function(event) {
+	    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
+	        (event.keyCode == 65 && event.ctrlKey === true) || 
+	        (event.keyCode >= 35 && event.keyCode <= 39)) {
+	             return;
+	    }
+	    else {
+	        if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+	            event.preventDefault(); 
+	        }   
+	    }
+	}
+
+	function getWindowWidth() {
+		return (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth);
+	}
+
+	function getWindowHeight() {
+		return (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
+	}
 });
 
 
-
-var numbers = function(event) {
-    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
-        (event.keyCode == 65 && event.ctrlKey === true) || 
-        (event.keyCode >= 35 && event.keyCode <= 39)) {
-             return;
-    }
-    else {
-        if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
-            event.preventDefault(); 
-        }   
-    }
-}

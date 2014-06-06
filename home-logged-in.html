@@ -7,34 +7,64 @@
 	<link rel="shortcut icon" href="css/images/favicon.ico" />
 	<link rel="stylesheet" href="css/jquery.selectBoxIt.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.10.4.custom.min.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/colorbox.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 	<!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
     <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
     <script src="js/jquery.selectBoxIt.min.js"></script>
     <script src="js/jquery.fs.selecter.js"></script>
     <script src="js/jquery.ezmark.min.js"></script>
     <script src="js/jquery.inputmask.bundle.min.js"></script>
     <script src="js/jquery.bxslider.min.js"></script>
+    <script src="js/jquery.colorbox-min.js"></script>
     <script src="js/functions.js"></script>
 </head>
 <body>
 	<section class="page-wrapper">
-		<header class="page-header minimized">
+		<header class="page-header always-minimized">
 			<div class="clearfix">
 				<div class="logo"><a href="#" class="notext">WingzOn</a></div><!-- /.logo -->
 				<a href="#" class="btn-genre" id="btn-genres">Genres<i></i></a>
 				<a href="#" class="btn-search">Search</a>
 			</div><!-- /.clearfix -->
+			<a href="#" class="menu">Menu</a>
 			<nav class="nav">
 				<ul>
 					<li><a href="#">Weekly</a></li>
 					<li><a href="#">Monthly</a></li>
 					<li><a href="#" class="inactive">Annual</a></li>
-					<li><a href="#" class="active">The Charts</a></li>
+					<li>
+						<a href="#">The Charts</a>
+						<div class="dd">
+							<a href="#" class="nav-back">Back</a>
+							<ul>
+								<li><a href="#">Weekly</a></li>
+								<li>
+									<a href="#">Monthly</a>
+									<div class="dd">
+										<a href="#" class="nav-back">Back</a>
+										<ul>
+											<li><a href="#">November 2014</a></li>
+											<li><a href="#">October 2014</a></li>
+											<li><a href="#">September 2014</a></li>
+											<li><a href="#">August 2014</a></li>
+											<li><a href="#">July 2014</a></li>
+											<li><a href="#">June 2014</a></li>
+											<li><a href="#">May 2014</a></li>
+											<li><a href="#">April 2014</a></li>
+										</ul>
+									</div><!-- /.dd -->
+								</li>
+								<li><a href="#" class="inactive">Annual</a></li>
+							</ul>
+						</div><!-- /.dd -->
+					</li>
 				</ul>
 			</nav><!-- /.nav -->
 		</header><!-- /.page-header -->
@@ -240,6 +270,14 @@
 								</div><!-- /.tabs-nav -->
 
 								<div class="tabs-body">
+									<div class="show-on-mobile">
+										<div class="tab-heading">
+											<a href="#" class="back-link">Back</a>
+											<h4 class="title"><strong>Arcade Fire</strong> — Afterlife</h4><!-- /.title -->
+											<p><a href="#" class="author">INDIE ROCK</a> <span><span class="num">63,084</span> RATINGS</span></p>
+											<a href="#" class="goto-link">Next</a>
+										</div><!-- /.tab-heading --><!-- /.tab -->
+									</div><!-- /.show-on-mobile -->
 									<div class="tab tab-rating">
 										<form action="#" class="rate-form">
 											<div class="form-cnt">
@@ -278,7 +316,16 @@
 													</div><!-- /.col-left -->
 													<div class="col-right">
 														<h4>What will <em><strong>others think</strong></em> of this song?</h4>
-														<input type="submit" class="btn submit" value="Submit">
+														<figure class="rate-widget">
+															<label>Taste</label>
+															<div class="rate-slider-wrapper">
+																<div class="rate-slider">
+																	<div class="points"><span class="points-counter">99</span><i></i></div><!-- /.points -->
+																	<input type="text" class="points-field">
+																</div><!-- /.rate-slider -->
+															</div><!-- /.rate-slider-wrapper -->
+														</figure><!-- /.rate-widget -->
+														<div class="form-actions"><input type="submit" class="btn submit" value="Submit"></div>
 													</div><!-- /.col-right -->
 												</div><!-- /.two-cols -->
 											</div><!-- /.form-cnt -->
@@ -306,7 +353,13 @@
 										<p>Special thanks: Justin Benoliel at Ramble<br /> West Productions</p>
 									</div><!-- /.tab -->
 
-									<div class="tab"></div><!-- /.tab -->
+									<div class="tab">
+										<div class="show-on-mobile">
+											<div class="facebook-feed">
+												<img src="css/images/facebook-mobile.jpg" alt="" width="320">
+											</div><!-- /.facebook-feed -->
+										</div>
+									</div><!-- /.tab -->
 								</div><!-- /.tabs-body -->
 							</div><!-- /.tabs -->
 						</div><!-- /.video-overlay -->
@@ -314,9 +367,6 @@
 				</section><!-- /.content -->
 			</section>
 		</section><!-- /.page-main -->
-		<footer class="page-footer">
-			
-		</footer><!-- /.page-footer -->
 	</section><!-- /.page-wrapper -->
 	<aside class="aside-menu">
 		<div class="select-multiple">
@@ -334,5 +384,6 @@
 			</select>
 		</div><!-- /.select-multiple -->
 	</aside><!-- /.aside-menu -->
+	<a href="#" class="aside-menu-close aside-close">Genres<i></i></a>
 </body>
 </html>
