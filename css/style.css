@@ -181,7 +181,8 @@ input.btn { box-shadow: 4px 4px rgba(255,255,255,.1); }
 .latest-news .entry:hover .entry-text { background: url(images/black-overlay.png); color: #fd0043;}
 
 .top-bar.minimized { background: transparent; border: 0; height: 96px; }
-.top-bar.minimized .user-info .user-name { width: 100%; position: static; }
+.top-bar.minimized .user-info { width: 225px; }
+.top-bar.minimized .user-info .user-name { width: 100%; position: static; max-width: 145px; }
 .top-bar.minimized .col-row { position: static; }
 .minimized .user-info { position: fixed; top: 0; left: 80px; height: 48px; width: auto; z-index: 101; }
 .minimized .user-info .col { padding: 0; }
